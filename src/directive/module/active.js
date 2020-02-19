@@ -1,4 +1,4 @@
-import './waves.css'
+import './directives.css'
 
 export default {
   bind(el,binding) {

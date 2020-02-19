@@ -1,14 +1,14 @@
-const Index = () => import("@/pages/Index.vue")
-const Login = () => import("@/pages/Login.vue")
-const Home = () => import("@/pages/Home.vue")
-const Main  = () => import("@/components/main")
+const Login = () => import("@/views/login.vue")
+const Home = () => import("@/views/home.vue")
+const Main = () => import("@/components/main")
 
-const OrderManage  = () => import("@/pages/OrderManage")
-const MemberManage  = () => import("@/pages/MemberManage")
-const RechargeManage  = () => import("@/pages/RechargeManage")
-const WithdrawManage  = () => import("@/pages/WithdrawManage")
-const OrderOther  = () => import("@/pages/OrderOther")
-const UserManage  = () => import("@/pages/UserManage")
+
+import scan from './module/scan'
+import handling from './module/handling'
+import RuleManage from './module/rule-manage'
+import SourceManage from './module/source-manage'
+import system from './module/system'
+
 
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
@@ -23,168 +23,87 @@ const UserManage  = () => import("@/pages/UserManage")
  *  access: (null) 可访问该页面的权限数组，当前路由设置的权限会影响子路由
  *  icon: (-) 该页面在左侧菜单、面包屑和标签导航处显示的图标，如果是自定义图标，需要在图标名称前加下划线'_'
  *  beforeCloseName: (-) 设置该字段，则在关闭当前tab页时会去'@/router/before-close.js'里寻找该字段名对应的方法，作为关闭前的钩子函数
+ *  showAlways: 无论children有多少都展示
  * }
  *
  */
 
 export default [
-  {
-    path: '/',
-    redirect: {
-      name:'Home'
-    },
-    meta:{
-      hideInMenu:true
-    }
-  },
-  {
-    path: '/Home',
-    name:'home',
-    component: Main,
-    meta:{
-      title:'首页',
-      hideInMenu:true,
-      icon: 'md-home'
-    },
-    children:[
-      {
-        path: '/Home',
-        name:'Home',
-        component: Home,
-        meta:{
-          title:'首页',
-          icon: 'md-home',
-          hideInMenu:true
-        }
-      }
-    ]
-  },
-  {
-    path: '/Login',
-    name:'Login',
-    component:Login,
-    meta:{
-      title:'登录',
-      icon: 'md-home',
-      hideInMenu:true
-    }
-  },
-  {
-    path: '/order',
-    name:'order',
-    component: Main,
-    meta:{
-      title:'订单管理',
-      icon: 'md-home',
-      notCache:true
-    },
-    children:[
-      {
-        path:'/order/OrderManage',
-        name:'OrderManageSend',
-        component:OrderManage,
-        meta:{
-          title:'待发货',
-          icon:'md-home',
-          componentId:1,
-          notCache:true
-        }
-      },
-      {
-        path:'/order/OrderOther',
-        name:'OrderOther',
-        component:OrderOther,
-        meta:{
-          title:'待收货',
-          icon:'md-home',
-          componentId:1,
-          notCache:true
-        }
-      },
-    ]
-  },
-  {
-    path: '/user',
-    name: 'user',
-    component: Main,
-    meta: {
-      title: '用户管理',
-      icon: 'md-home'
-    },
-    children: [
-      {
-        path:'/user/MemberManage',
-        name:'MemberManage',
-        component:MemberManage,
-        meta:{
-          title:'经销商管理',
-          icon: 'md-home'
-        }
-      },
-      {
-        path:'/user/UserManage',
-        name:'UserManage',
-        component:UserManage,
-        meta:{
-          title:'用户管理',
-          icon: 'md-home'
-        }
-      },
-    ],
-  },
-  {
-    path: '/finance',
-    name: 'finance',
-    component: Main,
-    meta: {
-      title: '财务管理',
-      icon: 'md-home'
-    },
-    children: [
-      {
-        path:'/finance/RechargeManage',
-        name:'RechargeManage',
-        component:RechargeManage,
-        meta:{
-          title:'充值管理',
-          icon: 'md-home'
-        }
-      },
-      {
-        path:'/finance/WithdrawManage',
-        name:'WithdrawManage',
-        component:WithdrawManage,
-        meta:{
-          title:'提现管理',
-          icon: 'md-home'
-        }
-      }
-    ],
-  },
-  {
-    path:'/argu',
-    name:'argu',
-    meta:{
-      hideInMenu:true
-    },
-    component:Main,
-    children:[
-      {
-        path:'params/:id',
-        name:'params',
-        meta:{
-          title:route => `params-${route.params.id}`,
+    {
+        path: '/',
+        redirect: {
+            name: 'Home'
         },
-        component:() => import('@/pages/argu-page/params.vue')
-      },
-      {
-        path:'query',
-        name:'query',
-        meta:{
-          title:route => `query-${route.query.id}`,
+        meta: {
+            hideInMenu: true
+        }
+    },
+    {
+        path: '/home',
+        name: '',
+        component: Main,
+        meta: {
+            title: '首页',
+            hideInMenu: false,
+            icon: 'home fa-2x',
+            showAlways: false
         },
-        component:() => import('@/pages/argu-page/query.vue')
-      }
-    ]
-  }
+        children: [
+            {
+                path: '/home/',
+                name: 'Home',
+                component: Home,
+                meta: {
+                    title: '首页',
+                    icon: 'home fa-2x',
+                    hideInMenu: false
+                }
+            }
+        ]
+    },
+
+    {
+        path: '/login',
+        name: 'Login',
+        component: Login,
+        meta: {
+            title: '登录',
+            icon: 'edit',
+            hideInMenu:true,
+            showAlways: false,
+            hideInBread:true
+        },
+    },
+    // 动态路由
+    {
+        path: '/argu',
+        name: 'argu',
+        meta: {
+            hideInMenu: true
+        },
+        component: Main,
+        children: [
+            {
+                path: 'params/:id',
+                name: 'params',
+                meta: {
+                    title: route => `params-${route.params.id}`,
+                },
+                component: () => import('@/views/argu-page/params.vue')
+            },
+            {
+                path: 'query',
+                name: 'query',
+                meta: {
+                    title: route => `query-${route.query.id}`,
+                },
+                component: () => import('@/views/argu-page/query.vue')
+            },
+        ]
+    },
+    ...SourceManage,
+    ...scan,
+    ...handling,
+    ...RuleManage,
+    ...system
 ]

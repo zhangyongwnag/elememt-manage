@@ -7,7 +7,7 @@
       <Icon :size="18" type="md-arrow-dropdown"></Icon>
       <el-dropdown-menu slot="list">
         <el-dropdown-item name="message">
-          消息中心<Badge style="margin-left: 10px" :count="messageUnreadCount"></Badge>
+          消息中心<el-badge style="margin-left: 10px" :count="messageUnreadCount"></el-badge>
         </el-dropdown-item>
         <el-dropdown-item name="logout">退出登录</el-dropdown-item>
       </el-dropdown-menu>

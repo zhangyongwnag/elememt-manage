@@ -3,7 +3,7 @@
     <div class="close-con">
       <el-dropdown @click="handleTagsOption" style="margin-top:8px;">
         <div type="text">
-          <i class="el-icon-circle-close"></i>
+          <i class="el-icon-circle-close" />
         </div>
         <el-dropdown-menu slot="dropdown" v-waves>
           <el-dropdown-item name="close-all">关闭所有</el-dropdown-item>
@@ -16,21 +16,21 @@
     </ul>
     <div class="btn-con left-btn" v-active @click="handleScroll(240)">
       <div>
-        <Icon :size="18" type="ios-arrow-back" />
+        <i :size="18" class="el-icon-arrow-left" />
       </div>
     </div>
     <div class="btn-con right-btn" v-active @click="handleScroll(-240)">
       <div>
-        <Icon :size="18" type="ios-arrow-forward" />
+        <i :size="18" class="el-icon-arrow-right" />
       </div>
     </div>
     <div class="scroll-outer" ref="scrollOuter" @DOMMouseScroll="handlescroll" @mousewheel="handlescroll">
       <div ref="scrollBody" class="scroll-body" :style="{left: tagBodyLeft + 'px'}">
         <transition-group name="taglist-moving-animation">
           <el-tag
-            closable
+            closeable
             v-for="(item, index) in list"
-            :disable-transitions="true"
+            :disable-transitions='true'
             ref="tagsPageOpened"
             :key="`tag-nav-${index}`"
             :name="item.name"
@@ -38,11 +38,11 @@
             @close="handleClose(item)"
             @click="handleClick(item)"
             :closable="item.name !== 'Home'"
-            :class="isCurrentTag(item) ? 'tagsActive' : ''"
             @contextmenu.prevent.native="contextMenu(item, $event)"
-            v-waves
-            effect="dark"
             class="tags"
+            effect="dark"
+            :class="isCurrentTag(item) ? 'tagsActive' : ''"
+            v-waves
           >{{ showTitleInside(item) }}</el-tag>
         </transition-group>
       </div>
@@ -76,7 +76,7 @@ export default {
         others: '关闭其他',
         all: '关闭所有'
       },
-      routeName:''
+      routeName:'',
     }
   },
   computed: {
@@ -142,6 +142,7 @@ export default {
     },
     handleClick (item) {
       this.$emit('input', item)
+      this.routeName = item.name
     },
     showTitleInside (item) {
       return showTitle(item, this)
@@ -177,8 +178,6 @@ export default {
       })
     },
     contextMenu (item, e) {
-      console.log(e)
-      console.log(item)
       if (item.name === 'Home') {
         return
       }
@@ -218,8 +217,8 @@ export default {
   }
   .tags-nav {
     position: relative;
-    border-top: 1px solid #F0F0F0;
-    /*border-bottom: 1px solid #F0F0F0;*/
+    border-top: 1px solid rgba(238,247,255,1);
+    /*border-bottom: 1px solid rgba(238,247,255,1);*/
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -247,7 +246,7 @@ export default {
   }
   .btn-con div{
     padding: 6px 5px;
-    line-height: 14px;
+    line-height: 16px;
     text-align: center;
   }
   .left-btn{
@@ -263,11 +262,11 @@ export default {
     background-color: #fff;
     height:38px;
     position: absolute;
-    left: 28px;
-    right: 61px;
+    left: 23px;
+    right: 56px;
     top: 0;
     bottom: 0;
-    /*box-shadow: 0px 0 3px 2px rgba(100, 100, 100, .1) inset;*/
+    /*box-shadow: 0px 0 1px 1px rgba(100, 100, 100, .1) inset;*/
   }
   .scroll-body {
     height:calc(100% - 1px);
@@ -297,7 +296,7 @@ export default {
     cursor: pointer;
   }
   .contextmenu li:hover {
-    background: #eee;
+    background-color: #eee;
   }
   .tags{
     padding: 0 15px;
@@ -305,10 +304,10 @@ export default {
     height: 38px;
     border-radius: 0px;
     border: 0px;
-    background-color: #Fff;
-    color: #606266;
+    background-color: #fff;
+    color:#606266;
     line-height: 38px;
-    margin: 0px;
+    margin:0px;
   }
   .tagsActive{
     height: 37px;

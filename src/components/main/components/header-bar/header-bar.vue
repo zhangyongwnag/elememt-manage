@@ -1,7 +1,6 @@
 <template>
   <div class="header-bar">
-    <sider-trigger :collapsed="collapsed" icon="md-menu" @on-change="handleCollpasedChange"></sider-trigger>
-    <custom-bread-crumb show-icon style="margin-left: 30px;" :list="breadCrumbList"></custom-bread-crumb>
+    <custom-bread-crumb show-icon style="margin-left: 15px;" :list="breadCrumbList"></custom-bread-crumb>
     <div class="custom-content-con">
       <slot></slot>
     </div>
@@ -41,7 +40,7 @@ export default {
     float: right;
     height: auto;
     padding-right: 20px;
-    line-height: 64px;
+    line-height: 40px;
   }
   .header-bar .custom-content-con > * {
     float: right;

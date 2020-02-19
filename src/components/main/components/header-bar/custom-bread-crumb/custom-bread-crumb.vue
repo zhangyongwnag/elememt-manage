@@ -1,7 +1,7 @@
 <template>
   <div class="custom-bread-crumb">
     <el-breadcrumb :style="{fontSize: `${fontSize}px`}">
-      <el-breadcrumb-item v-for="item in list" :to="item.to" :key="`bread-crumb-${item.name}`">
+      <el-breadcrumb-item v-for="item in list" :to="{path:item.to}" :key="`bread-crumb-${item.name}`">
         <common-icon style="margin-right: 4px;" :type="item.icon || ''"/>
         {{ showTitle(item) }}
       </el-breadcrumb-item>
@@ -46,8 +46,8 @@ export default {
 <style scoped>
   .custom-bread-crumb {
     display: inline-block;
-    /*vertical-align: top;*/
-    margin-top: 0px;
+    /* vertical-align: super; */
+    margin-top: 3px;
   }
 
 </style>

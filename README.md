@@ -18,9 +18,9 @@ npm run build
 npm run build --report
 ```
 ## 演示地址：
-### https://github.com/zhangyongwnag/elememt-manage/dist/#/
+### https://zhangyongwnag.github.io/elememt-manage/dist/index.html#/Home
 
 ## 效果图：
 ![](https://img-blog.csdnimg.cn/20190514115704364.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Z1ZTIwMTg=,size_16,color_FFFFFF,t_70)
 
-![](https://img-blog.csdnimg.cn/20200219190859727.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Z1ZTIwMTg=,size_16,color_FFFFFF,t_70)
+![](https://img-blog.csdnimg.cn/20200219203003881.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Z1ZTIwMTg=,size_16,color_FFFFFF,t_70)

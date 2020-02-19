@@ -39,16 +39,16 @@ export default {
     }
   },
   mounted () {
-    // window.addEventListener('scroll', this.handleScroll, false)
-    // window.addEventListener('resize', this.handleScroll, false)
-//    on(this.containerEle, 'scroll', this.handleScroll)
-//    on(this.containerEle, 'resize', this.handleScroll)
+    window.addEventListener('scroll', this.handleScroll, false)
+    window.addEventListener('resize', this.handleScroll, false)
+   on(this.containerEle, 'scroll', this.handleScroll)
+   on(this.containerEle, 'resize', this.handleScroll)
   },
   beforeDestroy () {
-    // window.removeEventListener('scroll', this.handleScroll, false)
-    // window.removeEventListener('resize', this.handleScroll, false)
-//    off(this.containerEle, 'scroll', this.handleScroll)
-//    off(this.containerEle, 'resize', this.handleScroll)
+    window.removeEventListener('scroll', this.handleScroll, false)
+    window.removeEventListener('resize', this.handleScroll, false)
+   off(this.containerEle, 'scroll', this.handleScroll)
+   off(this.containerEle, 'resize', this.handleScroll)
   },
   computed: {
     containerEle () {
@@ -68,7 +68,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
   .backTop_wrap{
     display: flex;
     justify-content: flex-end;

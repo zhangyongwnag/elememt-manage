@@ -1,5 +1,5 @@
 <template>
-  <i :class="`el-icon-${type}`" :style="styles"></i>
+  <i :class="`fa fa-${type}`" :style="styles"></i>
 </template>
 
 <script>
