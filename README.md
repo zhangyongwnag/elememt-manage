@@ -1,6 +1,6 @@
 # 后台管理系统
 
-> 利用vue-cli 2.0 以及 element-ui 实现，系统基本骨架
+> 利用vue-cli 2.0 以及 element-ui 实现，系统基本框架
 
 ## Build Setup
 
@@ -13,6 +13,12 @@ npm run dev
 
 # build for production with minification
 npm run build
+
+# test for production with minification
+npm run test
+
+# analyz for production with minification
+npm run analyz
 
 # build for production and view the bundle analyzer report
 npm run build --report
