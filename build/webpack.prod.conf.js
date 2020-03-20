@@ -11,6 +11,21 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer')
+const GenerateAssetPlugin = require('generate-asset-webpack-plugin')
+
+const createJson = function () {
+    let serveConfigJson = {
+        code:200,
+        data:{
+            BASE_URL: "172.16.0.94:80"
+        },
+        msg:''
+    }
+    // let serveConfigJson = {
+    //     baseURI: '172.16.0.94:80'
+    // }
+    return JSON.stringify(serveConfigJson,null,4)
+}
 
 const env = require('../config/prod.env')
 
@@ -40,19 +55,6 @@ const webpackConfig = merge(baseWebpackConfig, {
         // http://vuejs.github.io/vue-loader/en/workflow/production.html
         new webpack.DefinePlugin({
             'process.env': env
-        }),
-        // 去掉打包时的console
-        new UglifyJsPlugin({
-            uglifyOptions: {
-                compress: {
-                    warnings: false,
-                    drop_console:true,
-                    drop_debugger:true,
-                    pure_funcs:['console.log'] // 移除console
-                }
-            },
-            sourceMap: false,
-            parallel: true
         }),
         // webpack4利用splitChunks提取公共代码 webpack3利用CommonsChunkPlugin抽取公共代码
         // new webpack.optimize.CommonsChunkPlugin('common.js',['common']),
@@ -155,6 +157,33 @@ const webpackConfig = merge(baseWebpackConfig, {
         }),
     ]
 })
+
+// 测试环境去掉console日志
+if(process.env.type == '"test"'){
+    webpackConfig.plugins.push(
+        // 去掉打包时的console
+        new UglifyJsPlugin({
+            uglifyOptions: {
+                compress: {
+                    warnings: false,
+                    drop_console:true,
+                    drop_debugger:true,
+                    pure_funcs:['console.log'] // 移除console
+                }
+            },
+            sourceMap: false,
+            parallel: true
+        }),
+        // 抽离打包配置文件
+        new GenerateAssetPlugin({
+            filename: 'serve.config.json', // 输出到test根目录下的serve.config.json
+            fn: (compilation, cb) => {
+                cb(null, createJson(compilation))
+            },
+            extraFiles: []
+        })
+    )
+}
 
 // gzip压缩
 if (config.build.productionGzip) {

@@ -20,7 +20,9 @@
       return {}
     },
     mounted() {
-
+      if (!localStorage.getItem('userInfo')){
+          this.$router.replace({path:'/login'})
+      }
     },
     methods: {
       addRoutesParams() {

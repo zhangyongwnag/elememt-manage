@@ -4,6 +4,15 @@
 
 const path = require('path')
 const proxyConfig = require('./proxyConfig')
+let indexOutput
+let indexAssetsRoot
+if(process.env.type == '"test"'){
+    indexOutput = path.resolve(__dirname, '../test/index.html')
+    indexAssetsRoot = path.resolve(__dirname, '../test')
+}else {
+    indexOutput = path.resolve(__dirname, '../dist/index.html')
+    indexAssetsRoot = path.resolve(__dirname, '../dist')
+}
 
 module.exports = {
     dev: {
@@ -46,10 +55,10 @@ module.exports = {
 
     build: {
         // Template for index.html
-        index: path.resolve(__dirname, '../dist/index.html'),
+        index:indexOutput,
 
         // Paths
-        assetsRoot: path.resolve(__dirname, '../dist'),
+        assetsRoot: indexAssetsRoot,
         assetsSubDirectory: 'static',
         assetsPublicPath: './',
 
@@ -73,6 +82,6 @@ module.exports = {
         // View the bundle analyzer report after build finishes:
         // `npm run build --report`
         // Set to `true` or `false` to always turn it on or off
-        bundleAnalyzerReport: process.env.npm_config_report
+        bundleAnalyzerReport: process.env.type != '"test"' ? true : false
     }
 }
