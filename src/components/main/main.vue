@@ -43,13 +43,13 @@
                 <div class="main-content-con" style="padding: 0">
                     <div class="main-layout-con">
                         <!--tabs页签-->
-                        <!--            <div class="tag-nav-wrapper">-->
-                        <!--              <tags-nav :value="$route" @input="handleClick" :list="tagNavList" @on-close="handleCloseTag"/>-->
-                        <!--            </div>-->
+                                    <div class="tag-nav-wrapper">
+                                      <tags-nav :value="$route" @input="handleClick" :list="tagNavList" @on-close="handleCloseTag"/>
+                                    </div>
                         <!--面包屑页签-->
-                        <div class="breadcrumb-wrapper">
+                 <!--       <div class="breadcrumb-wrapper">
                             <HeaderBar/>
-                        </div>
+                        </div>-->
                         <div class="content-wrapper">
                             <div class="content">
                                 <keep-alive :include="cacheList">
@@ -194,16 +194,12 @@
                 route: {name, params, query, meta}
             })
             this.setBreadCrumb(this.$route)
-            // 设置初始语言
-//    this.setLocal(this.$i18n.locale)
             // 如果当前打开页面不在标签栏中，跳到homeName页
             if (!this.tagNavList.find(item => item.name === this.$route.name)) {
                 this.$router.push({
                     name: 'Home'
                 })
             }
-            // 获取未读消息条数
-//    this.getUnreadMessageCount()
         }
     }
 </script>

@@ -1,5 +1,5 @@
 import directive from './directives'
-import repeat from './module/repeat-click'
+import { directive as clickOutside } from 'v-click-outside-x'
 
 const importDirective = Vue => {
     /**
@@ -40,6 +40,10 @@ const importDirective = Vue => {
      * title指令 v-title
      */
     Vue.directive('title', directive.title)
+    /**
+     * clickOutside指令 v-clickOutside
+     */
+    Vue.directive('clickOutside',clickOutside)
 }
 
 export default importDirective

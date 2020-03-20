@@ -1,13 +1,13 @@
 <template>
   <div class="tags-nav">
     <div class="close-con">
-      <el-dropdown @click="handleTagsOption" style="margin-top:8px;">
+      <el-dropdown @command="handleTagsOption" style="margin-top:8px;">
         <div type="text">
           <i class="el-icon-circle-close" />
         </div>
         <el-dropdown-menu slot="dropdown" v-waves>
-          <el-dropdown-item name="close-all">关闭所有</el-dropdown-item>
-          <el-dropdown-item name="close-others">关闭其他</el-dropdown-item>
+          <el-dropdown-item command="all">关闭所有</el-dropdown-item>
+          <el-dropdown-item command="others">关闭其他</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>

@@ -135,12 +135,53 @@ export const getNewTagList = (list, newRoute) => {
 }
 
 /**
- * @param {*} access 用户权限数组，如 ['super_admin', 'admin']
- * @param {*} route 路由列表
+ * @param {arr} routes 路由信息
+ * @param {arr} limit 权限信息
+ * @paras {arr} keys 权限信息title集合
  */
-const hasAccess = (access, route) => {
-  if (route.meta && route.meta.access) return hasOneOf(access, route.meta.access)
-  else return true
+export const getMenuByLimit = (routes, limit, keys) => {
+  routes.map(route => {
+    if (!route.meta.noAccess) {
+      // 过滤后台列表返回的数据，如果匹配显示 反之隐藏
+      if (keys.indexOf(route.meta.title) != -1) {
+        let obj = {
+          showAlways: true,
+          hideInMenu: false,
+          checkAuth: row.checkAuth || '',
+          reviseAuth: row.reviseAuth || '',
+        }
+        Object.assign(route.meta, obj)
+        // 过滤 children
+        let list = []
+        let value = data[keys[keys.indexOf(route.meta.title)]]
+        value.map(item => list.push(item.secondModule))
+        route.children.map(item => {
+          getMenuByLimit(item, value, list)
+        })
+      } else {
+        let obj = {
+          hideInMenu: true
+        }
+        Object.assign(route.meta, obj)
+      }
+    }
+  })
+}
+
+/**
+ * @param {obj} route 当前路由信息
+ * @param {arr} limit 当前权限表
+ */
+export const getAuthFromLimitList = (route, limit) => {
+  let value = ''
+  limit.map(item => {
+    item.children ?
+      item.children.map(row => {
+        row.name == route.name ? value = row.meta : ''
+      })
+      : ''
+  })
+  return value || {}
 }
 
 /**

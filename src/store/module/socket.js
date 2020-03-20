@@ -17,7 +17,7 @@ export default {
           // websocket.watch(res => {
           //     if (res) {
           //         let data = JSON.parse(res.data)
-          //         console.log(data)
+          //         // console.log(data)
           //         if (data.code == '1' && data.message == '扫描作业') {
           //             state.scanSocketData = data.data
           //         }else if (data.code == '2' && data.message == '脱敏作业'){

@@ -101,7 +101,7 @@
 .common_content::-webkit-scrollbar-thumb {
     border-radius: 10px;
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    background-color: #f1f2f3;
+    background-color: #007aff;
 }
 
 .common_content::-webkit-scrollbar-track {
@@ -116,7 +116,7 @@
 }
 
 .common_select {
-    width: 190px;
+    /*width: 190px;*/
     height: 32px;
     margin-right: 12px;
 }
@@ -265,7 +265,7 @@
 .scrollWrap::-webkit-scrollbar-thumb {
     border-radius: 10px;
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    background-color: #f1f2f3;
+    background-color: #007aff;
 }
 
 .scrollWrap::-webkit-scrollbar-track {
@@ -300,6 +300,12 @@
 /*公共动画*/
 .fade-enter-active {
     animation: .3s fade-in;
+}
+
+/*添加方案step3 and 4 dialog弹窗*/
+.dialog_program{
+    width: 90%;
+    /*height: 70%;*/
 }
 
 .fade-leave-active {
@@ -509,14 +515,10 @@
 
 /* 整个弹窗 包括蒙层*/
 .dialog-class {
-    /*font-size: 48px;*/
-    color: red;
-    /*border: 5px gold solid;*/
 }
 
 /* 弹窗中间的内容区域 */
 .dialog-body {
-    /*border: 5px gold solid;*/
     padding: 20px;
     position: relative;
 }
@@ -538,30 +540,19 @@
 
 
 
-/* 直接修改同类名下的内容 */
+/* 直接修改element-ui同类名下的内容 */
 .el-dialog__footer {
     /*padding: 0px !important;*/
     padding: 0px;
 
 }
+/* 直接修改element-ui同类名下的内容 */
 .el-dialog__title {
     line-height: 24px;
     font-size: 16px;
     color: #313234;
 }
 
-
-/*.el-form-item__label {
-    font-size: 12px;
-}
-
-.el-form-item {
-    !*line-height: 40px;*!
-    !*position: relative;*!
-    !*font-size: 14px;*!
-    !*padding: 4px 0px;*!
-    margin: 11px 0px;
-}*/
 
 /* 内置配置信息 */
 .header-title-stable {
@@ -596,15 +587,92 @@
 /* 右侧分页器*/
 .pagination-self-right {
     position: absolute;
-    bottom: 20px;
+    bottom: 0px;
     right: 20px;
-    /*border: 1px #3666ff solid;*/
 }
 
 /* 左侧分页器*/
 .pagination-self-left {
     position: absolute;
-    bottom: 20px;
+    bottom: 0px;
     left: 230px;
-    /*border: 1px #3666ff solid;*/
+}
+
+/*   中间无缝隙的左右两联分布*/
+.two-column-scan-rule {
+    width: 100%;
+    height: 100%;
+}
+/*   中间无缝隙的左右两联分布*/
+.left-list-scan-rule {
+    width: 310px;
+    height: 100%;
+    background-color: white;
+    border-right: 1px solid rgba(236, 239, 248, 1);
+}
+
+/*  中间无缝隙头部标题盒子*/
+.header-title-scan-rule {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* 中间无缝隙左侧 搜索的盒子的样式*/
+.input_search-left-scan-rule {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: #fff;
+    padding: 1px 0px;
+    box-sizing: border-box;
+}
+
+/* 中间无缝隙左侧 搜索的input的样式*/
+.el-input-search-left-scan-rule {
+    width: 250px;
+}
+
+/* 中间无缝隙左侧 搜索的放大镜的样式*/
+.input_search-left-scan-rule > span {
+    position: absolute;
+    left: 250px;
+    font-size: 14px;
+    background: #f5f7fa;
+    width: 28px;
+    height: 28px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 0 4px 4px 0;
+    border: 1px solid #DCDFE6;
+}
+
+/* 中间无缝隙左侧 搜索的放大镜的样式*/
+.pagination-rule {
+    left: 20px;
+    bottom: 150px;
+}
+
+/*  中间无缝隙头部标题盒子*/
+.header-title-scan-rule {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+
+}
+/*  中间无缝隙 底部*/
+.single-foot {
+    /*border: 1px solid red;*/
+    /*position: relative;*/
+}
+/*  中间无缝隙 底部*/
+.single-foot-right {
+    /*border: 1px solid chartreuse;*/
+    margin-bottom: 50px;
+    /*margin-top: 30px;*/
+    /*margin-right: 90px;*/
+    /*float: right;*/
 }

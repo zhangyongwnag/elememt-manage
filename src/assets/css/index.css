@@ -1189,7 +1189,7 @@
 }
 
 body, html {
-    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif !important;
     font-size: 12px;
     line-height: 1.5;
     color: #515a6e;
@@ -1457,6 +1457,9 @@ article, aside, blockquote, body, button, dd, details, div, dl, dt, fieldset, fi
 .el-menu--collapse .el-menu .el-submenu, .el-menu--popup {
     min-width: 200px
 }
+.el-menu--vertical{
+    left: 72px !important;
+}
 
 .el-pager li.btn-quicknext, .el-pager li.btn-quickprev {
     line-height: 28px;
@@ -1499,7 +1502,8 @@ article, aside, blockquote, body, button, dd, details, div, dl, dt, fieldset, fi
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
     box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
     box-sizing: border-box;
-    width: 50%
+    width: 50%;
+    transition: all 0.5s;
 }
 
 .el-dialog.is-fullscreen {
@@ -3114,7 +3118,7 @@ article, aside, blockquote, body, button, dd, details, div, dl, dt, fieldset, fi
 .el-table__body-wrapper::-webkit-scrollbar-thumb {
     border-radius: 10px;
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-    background-color: #f1f2f3;
+    background-color: #007aff;
 }
 
 .el-table__body-wrapper::-webkit-scrollbar-track {
@@ -12405,6 +12409,7 @@ article, aside, blockquote, body, button, dd, details, div, dl, dt, fieldset, fi
     transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
     width: 100%;
     font-size: 12px;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif !important;
 }
 
 .el-input__prefix, .el-input__suffix {
@@ -12587,7 +12592,7 @@ article, aside, blockquote, body, button, dd, details, div, dl, dt, fieldset, fi
     position: relative;
     border: 1px solid #DCDFE6;
     border-radius: 4px;
-    padding: 0 20px;
+    /*padding: 0 20px;*/
     width: 1px;
     white-space: nowrap
 }
@@ -13480,7 +13485,8 @@ article, aside, blockquote, body, button, dd, details, div, dl, dt, fieldset, fi
     font-weight: 500;
     padding: 8px 16px;
     font-size: 12px;
-    border-radius: 4px
+    border-radius: 4px;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif !important;
 }
 
 .el-button + .el-button {
@@ -13504,7 +13510,8 @@ article, aside, blockquote, body, button, dd, details, div, dl, dt, fieldset, fi
 }
 
 .el-button [class*=el-icon-] + span {
-    margin-left: 5px
+    margin-left: 5px;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif !important;
 }
 
 .el-button.is-plain:focus, .el-button.is-plain:hover {

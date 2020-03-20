@@ -1,16 +1,16 @@
 <template>
     <div class="wrap">
-        <header class="common_flex hvr-shrink" style="padding-top: 50px;">
-            <div class="logo common_flex">
+        <header class="common_flex hvr-shrink" style="padding-top: 2%;">
+            <div class="logo common_flex" style="z-index: 1;">
                 <img src="../assets/images/login/login_logo.png" alt="">
             </div>
-            <div class="common_flex_negative" style="align-items: flex-start;margin: 10px 0 0 30px">
+            <div class="common_flex_negative" style="align-items: flex-start;margin: 10px 0 0 30px;z-index: 1;">
                 <div class="description">XSecure-DBMasker SYSTEM</div>
                 <div class="title">数据脱敏系统</div>
             </div>
         </header>
         <section class="common_flex">
-            <div class="login" v-loading="loading">
+            <div class="login" v-loading="loading" style="z-index: 1;">
                 <div class="login_title">
                     <span>用户登录 &nbsp;&nbsp;</span>
                     <span>Login User</span>
@@ -52,142 +52,154 @@
                 </div>
             </div>
         </section>
-        <div class="login_content">
-            <!--            <section class="login_form">-->
-            <!--                <div class="login_des">-->
-            <!--                    <span class="left">用户登录</span>-->
-            <!--                    <span class="right">Login User</span>-->
-            <!--                </div>-->
-            <!--                <el-form :model="ruleForm" :rules="rules" ref="ruleform" class="form_area">-->
-            <!--                    <el-form-item prop="username" class="input_box">-->
-            <!--                        <span class="icon_blue_bg"><i class="el-icon-user"></i></span>-->
-            <!--                        <el-input class="login_input_item" type="text" v-model="ruleForm.username" placeholder="用户名" maxlength="20"></el-input>-->
-            <!--                    </el-form-item>-->
-            <!--                    <el-form-item prop="password" class="input_box">-->
-            <!--                        <span class="icon_blue_bg"><i class="el-icon-lock"></i></span>-->
-            <!--                        <el-input class="login_input_item" type="password" v-model="ruleForm.password" placeholder="密码" maxlength="20"></el-input>-->
-            <!--                    </el-form-item>-->
-            <!--                    <span class="code" @click="refreshCode"><img :src="initCodeImg" /></span>-->
-            <!--                    <el-button @click="refreshCode" type="primary">获取验证码</el-button>-->
-            <!--                    &lt;!&ndash; <el-button @click="regUser" type="primary">注册</el-button> &ndash;&gt;-->
-            <!--                    &lt;!&ndash; <el-button @click="logout" type="primary">登出</el-button> &ndash;&gt;-->
-            <!--                    <el-form-item prop="code" class="input_box">-->
-            <!--                        <el-input type="text" v-model="ruleForm.code" placeholder="验证码" maxlength="4"></el-input>-->
-            <!--                    </el-form-item>-->
-            <!--                    <el-form-item><el-button class="login_submit" type="primary" @click="submitForm('ruleForm')">登 录</el-button></el-form-item>-->
-            <!--                </el-form>-->
-            <!--            </section>-->
-        </div>
         <footer class="common_flex">
-            <div class="hvr-float-shadow">版权所有&nbsp;:&nbsp;北京中安星云软件技术有限公司</div>
+            <div class="hvr-float-shadow" style="z-index: 1;">版权所有&nbsp;:&nbsp;111</div>
         </footer>
+
+        <!--        <particlesJS style="position: absolute;left: 0;top: 0;width: 100%;height: 100%"/>-->
     </div>
 </template>
 
 <script>
-    import * as config from '../config'
-    import * as common from '../common'
-    import m from '../md5.min'
+  import * as config from '../../config'
+  import * as common from '../common'
+  import encryption from '../libs/encryption'
+  import particlesJS from '../components/ParticlesJS'
 
-    export default {
-        name: 'Login',
-        data () {
-            return {
-                loading: false,
-                form: {
-                    username: '',
-                    password: '',
-                    verifyCode: ''
-                },
-                verifyCodeInfo: {}
-            }
+  export default {
+    name: 'Login',
+    data() {
+      return {
+        loading: false,
+        form: {
+          username: 'system',
+          password: '123123123',
+          verifyCode: '1234'
         },
-        computed: {
-            loginButtonStatus () {
-                if (this.form.username && this.form.password && this.form.verifyCode.length == 4) {
-                    return true
-                } else {
-                    return false
-                }
+        verifyCodeInfo: {}
+      }
+    },
+    computed: {
+      loginButtonStatus() {
+        if (this.form.username && this.form.password && this.form.verifyCode.length == 4) {
+          return true
+        } else {
+          return false
+        }
+      }
+    },
+    created() {
+      this._getVerifyCodeImg()
+
+      // 如果token失效 传过来的userName
+      if (this.$route.query.userName){
+        this.form.username = this.$route.query.userName
+      }
+      localStorage.removeItem('userInfo')
+
+      // 监听键盘事件
+      document.onkeydown = event => {
+        let el = event || window.event || arguments.callee.caller.arguments[0]
+        el.keyCode == 13 ? this.login() : ''
+      }
+    },
+    destroyed() {
+      document.onkeydown = null
+    },
+    methods: {
+      // 登录
+      login() {
+        let {username, password, verifyCode} = this.form
+        if (!username) {
+          this.$message.info(`请输入用户名`)
+          return
+        }
+        if (!password) {
+          this.$message.info(`请输入密码`)
+          return
+        }
+        if (!verifyCode) {
+          this.$message.info(`请输入验证码`)
+          return
+        }
+        if (verifyCode.length != 4) {
+          this.$message.warning(`请输入正确的验证码`)
+          return
+        }
+        this.loading = true
+        let data = {
+          username,
+          passwd: encryption.encrypt(password),
+          // passwd: password,
+          imageId: this.verifyCodeInfo.imageId,
+          code: verifyCode
+        }
+ /*       this.httpCli.post(config.URL_LOGIN, data)
+          .then(res => {
+            if (res) {
+              // 登录成功
+              this._success(res.data)
+            } else {
+              this.loading = false
+              // 登录失败
+              setTimeout(() => {
+                this.form.verifyCode = ''
+              }, 500)
+              this._getVerifyCodeImg()
             }
-        },
-        created () {
+          })
+          .catch(err => {
+            setTimeout(() => {
+              this.form.verifyCode = ''
+            }, 500)
             this._getVerifyCodeImg()
+            this.loading = false
+          })*/
+ setTimeout(() => {
+   this._success(
+     {
+       token:'1',
+       modules:{},
+     }
+   )
+ },1000)
+      },
+      // 获取验证码
+      _getVerifyCodeImg() {
 
-            // 监听键盘事件
-            document.onkeydown = event => {
-                let el = event || window.event || arguments.callee.caller.arguments[0]
-                el.keyCode == 13 ? this.login() : ''
-            }
-        },
-        destroyed () {
-            document.onkeydown = null
-        },
-        methods: {
-            // 登录
-            login () {
-                let {username, password, verifyCode} = this.form
-                if (!username) {
-                    this.$message.info(`请输入用户名`)
-                    return
-                }
-                if (!password) {
-                    this.$message.info(`请输入密码`)
-                    return
-                }
-                if (!verifyCode) {
-                    this.$message.info(`请输入验证码`)
-                    return
-                }
-                if (verifyCode.length != 4) {
-                    this.$message.warning(`请输入正确的验证码`)
-                    return
-                }
-                this.loading = true
-                let data = {
-                    username,
-                    passwd: m.md5(password),
-                    imageId: this.verifyCodeInfo.imageId,
-                    code: verifyCode
-                }
-                this.httpCli.post(config.URL_LOGIN, data)
-                    .then(res => {
-                        setTimeout(() => {
-                            this.loading = false
-                        }, 200)
-                        if (res) {
-                            // 登录成功
-                            this.$router.replace({path: '/home'})
-                            localStorage.setItem('token', res.data.tokens)
-                        } else {
-                            // 登录失败
-                            setTimeout(() => {
-                                this.form.verifyCode = ''
-                            },500)
-                            this._getVerifyCodeImg()
-                        }
-                    })
-                    .catch(err => {
-                        setTimeout(() => {
-                            this.form.verifyCode = ''
-                        },500)
-                        this._getVerifyCodeImg()
-                        this.loading = false
-                    })
-            },
-            // 获取验证码
-            _getVerifyCodeImg () {
-                this.httpCli.get(config.URL_GET_VERIFY_CODE)
-                    .then(res => {
-                        if (res) {
-                            res.data.image = 'data:image/png;base64,' + res.data.image
-                            this.verifyCodeInfo = res.data
-                            this.form.verifyCode = ''
-                        }
-                    })
-            },
-        },
+      },
+      // 登录成功
+      _success(data) {
+        // 保存用户信息
+        localStorage.setItem('userInfo', JSON.stringify(data))
+        // 异步加载  // 权限过滤 // 开启socket
+        let promise = [
+          // this.$store.dispatch('getDBType'),
+          // this.$store.dispatch('getSrcType'),
+          // this.$store.dispatch('getChangeColumnType'),
+          // this.$store.dispatch('getMaskTypeList'),
+          // this.$store.dispatch('getFieldList'),
+          // this.$store.dispatch('_open'),
+          // this.$store.dispatch('_getAccessList', data.modules),
+          // this.$store.dispatch('_asyncFilter')
+        ]
+        Promise.all(promise)
+          .then(res => {
+            // 跳转
+            this.$router.replace({path: '/home'})
+            setTimeout(() => {
+              this.loading = false
+            },1000)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+    },
+    components: {
+      particlesJS
     }
+  }
 </script>
 
 <style scoped>
@@ -200,6 +212,7 @@
         -webkit-user-select: none;
         cursor: pointer;
         color: rgba(0, 0, 0, 0.8);
+        position: relative;
     }
 
     header {
@@ -226,17 +239,19 @@
     }
 
     section {
-        height: 50vh;
+        height: 50%;
         background-image: url(../assets/images/login/login_bg.png);
+        background-size: 100% 100%;
         background-position: center;
         background-origin: unset;
-        background-attachment: fixed;
+        /*background-attachment: fixed;*/
         background-repeat: no-repeat;
     }
 
     .login {
         width: 431px;
-        height: 81%;
+        max-height: 400px;
+        height: 100%;
         background: rgba(255, 255, 255, 1);
         box-shadow: 0 3px 18px 0px rgba(0, 0, 0, 0.2);
         border-radius: 8px;
@@ -247,12 +262,12 @@
     }
 
     .login_form {
-        margin: 45px 0 0 -2.5px;
+        margin: 5% 0 0 -2.5px;
     }
 
     .login_form .login_form_item {
         width: calc(100% + 5px);
-        margin-top: 30px;
+        margin-top: 9.2%;
     }
 
     .login_form .login_form_item input {
@@ -274,6 +289,7 @@
         -webkit-transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
         transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
         width: 100%;
+        font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif !important;
     }
 
     .login_form .login_form_item input:focus {
