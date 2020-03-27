@@ -34,17 +34,17 @@ new Vue({
 // 切换路由时取消正在pending的请求
 router.beforeEach((to, from, next) => {
     store.commit('clearCancelToken')
-    // if (localStorage.getItem('userInfo')){
-    //     let result = getAuthFromLimitList(to,JSON.parse(localStorage.getItem('userInfo')).data)
-    //     // 如果没权限页面 跳到404 注意写法 会出现死循环
-    //     if (result.hideInMenu && !result.noAccess){
-    //         if (to.path == '/404'){
-    //             next()
-    //         }else {
-    //             next('/404')
-    //         }
-    //     }
-    // }
+    if (localStorage.getItem('userInfo')){
+        // let result = getAuthFromLimitList(to,JSON.parse(localStorage.getItem('userInfo')).data)
+        // 如果没权限页面 跳到404 注意写法 会出现死循环
+        // if (result.hideInMenu && !result.noAccess){
+        //     if (to.path == '/404'){
+        //         next()
+        //     }else {
+        //         next('/404')
+        //     }
+        // }
+    }
     // 如果userInfo不存在 跳到登录 注意写法 会出现死循环
     if (!localStorage.getItem('userInfo')){
         if (to.path == '/login'){
