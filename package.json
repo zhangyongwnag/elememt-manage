@@ -13,7 +13,7 @@
         "analyz": "cross-env NODE_ENV=production npm_config_report=true npm run build"
     },
     "dependencies": {
-        "axios": "^0.18.0",
+        "axios": "^0.21.1",
         "clipboard": "^2.0.4",
         "compression-webpack-plugin": "^1.1.12",
         "crypto-js": "^4.0.0",
